@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>SIPCS.BLL</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SIPCS.DAL\SIPCS.DAL.csproj" />
+    <ProjectReference Include="..\SIPCS.Common\SIPCS.Common.csproj" />
+  </ItemGroup>
+</Project>
