@@ -22,7 +22,7 @@ namespace SIPCS.UI
                 MessageBox.Show("فشل الاتصال بقاعدة البيانات. يرجى التحقق من الإعدادات.", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return; // إيقاف تشغيل التطبيق إذا فشل الاتصال
             }
-            Application.Run(new Forms.LoginForm());
+            Application.Run(new Forms.Login());
         }
     }
 }
