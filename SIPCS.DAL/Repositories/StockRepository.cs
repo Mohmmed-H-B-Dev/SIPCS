@@ -12,14 +12,16 @@ namespace SIPCS.DAL.Repositories
 
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
-
-            var cmd = new SqlCommand(@"
+            string sql = @"
                 SELECT s.StockID, s.WarehouseID, s.ProductID, s.Quantity,
-                       w.WarehouseName, p.ProductName
-                FROM Stock s
-                INNER JOIN Warehouses w ON s.WarehouseID = w.WarehouseID
-                INNER JOIN Products p ON s.ProductID = p.ProductID
-                ORDER BY w.WarehouseName, p.ProductName", conn);
+       w.WarehouseName, p.ProductName,p.SKU,p.ReorderLevel
+FROM Stock s
+INNER JOIN Warehouses w ON s.WarehouseID = w.WarehouseID
+INNER JOIN Products p ON s.ProductID = p.ProductID
+ORDER BY w.WarehouseName, p.ProductName";
+
+
+            var cmd = new SqlCommand(sql, conn);
 
             using var reader = cmd.ExecuteReader();
 
@@ -32,7 +34,9 @@ namespace SIPCS.DAL.Repositories
                     ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
                     Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
                     WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
-                    ProductName = reader.GetString(reader.GetOrdinal("ProductName"))
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                    ReorderLevel = reader.GetInt32(reader.GetOrdinal("ReorderLevel")),
+                    SKU = reader.GetString(reader.GetOrdinal("SKU"))
                 });
             }
 
@@ -47,12 +51,12 @@ namespace SIPCS.DAL.Repositories
 
             var cmd = new SqlCommand(@"
                 SELECT s.StockID, s.WarehouseID, s.ProductID, s.Quantity,
-                       w.WarehouseName, p.ProductName
-                FROM Stock s
-                INNER JOIN Warehouses w ON s.WarehouseID = w.WarehouseID
-                INNER JOIN Products p ON s.ProductID = p.ProductID
-                WHERE s.WarehouseID = @WarehouseID
-                ORDER BY w.WarehouseName, p.ProductName", conn);
+       w.WarehouseName, p.ProductName,p.SKU,p.ReorderLevel
+FROM Stock s
+INNER JOIN Warehouses w ON s.WarehouseID = w.WarehouseID
+INNER JOIN Products p ON s.ProductID = p.ProductID
+WHERE s.WarehouseID = @WarehouseID
+ORDER BY w.WarehouseName, p.ProductName", conn);
 
             cmd.Parameters.AddWithValue("@WarehouseID", warehouseID);
     
@@ -67,7 +71,9 @@ namespace SIPCS.DAL.Repositories
                     ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
                     Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
                     WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
-                    ProductName = reader.GetString(reader.GetOrdinal("ProductName"))
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                    ReorderLevel = reader.GetInt32(reader.GetOrdinal("ReorderLevel")),
+                    SKU = reader.GetString(reader.GetOrdinal("SKU"))
                 });
             }
 
@@ -81,7 +87,7 @@ namespace SIPCS.DAL.Repositories
 
             var cmd = new SqlCommand(@"
                 SELECT s.StockID, s.WarehouseID, s.ProductID, s.Quantity,
-                       w.WarehouseName, p.ProductName
+                       w.WarehouseName, p.ProductName, p.SKU, p.ReorderLevel
                 FROM Stock s
                 INNER JOIN Warehouses w ON s.WarehouseID = w.WarehouseID
                 INNER JOIN Products p ON s.ProductID = p.ProductID
@@ -100,7 +106,9 @@ namespace SIPCS.DAL.Repositories
                     ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
                     Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
                     WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
-                    ProductName = reader.GetString(reader.GetOrdinal("ProductName"))
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                    ReorderLevel = reader.GetInt32(reader.GetOrdinal("ReorderLevel")),
+                    SKU = reader.GetString(reader.GetOrdinal("SKU"))
                 };
             }
 
@@ -115,7 +123,7 @@ namespace SIPCS.DAL.Repositories
 
             var cmd = new SqlCommand(@"
                 SELECT s.StockID, s.WarehouseID, s.ProductID, s.Quantity,
-                       w.WarehouseName, p.ProductName
+                       w.WarehouseName, p.ProductName,p.SKU, p.ReorderLevel
                 FROM Stock s
                 INNER JOIN Warehouses w ON s.WarehouseID = w.WarehouseID
                 INNER JOIN Products p ON s.ProductID = p.ProductID
@@ -135,7 +143,9 @@ namespace SIPCS.DAL.Repositories
                     ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
                     Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
                     WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
-                    ProductName = reader.GetString(reader.GetOrdinal("ProductName"))
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                    ReorderLevel = reader.GetInt32(reader.GetOrdinal("ReorderLevel")),
+                    SKU = reader.GetString(reader.GetOrdinal("SKU"))
                 };
             }
 

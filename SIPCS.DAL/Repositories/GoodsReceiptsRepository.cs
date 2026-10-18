@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using SIPCS.Common.Models;
 using SIPCS.DAL.Helpers;
+using System.Data;
 
 namespace SIPCS.DAL.Repositories
 {
@@ -12,7 +13,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-            var cmd = new SqlCommand(@"
+           using var cmd = new SqlCommand(@"
                 SELECT gr.ReceiptID, gr.ReceiptDate, gr.WarehouseID,
                        gr.SupplierName, gr.CreatedByUserID,
                        w.WarehouseName, u.FullName AS CreatedByName
@@ -45,7 +46,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-            var cmd = new SqlCommand(@"
+           using var cmd = new SqlCommand(@"
                 SELECT gr.ReceiptID, gr.ReceiptDate, gr.WarehouseID,
                        gr.SupplierName, gr.CreatedByUserID,
                        w.WarehouseName, u.FullName AS CreatedByName
@@ -80,7 +81,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-            var cmd = new SqlCommand(@"
+          using  var cmd = new SqlCommand(@"
                 INSERT INTO GoodsReceipts
                     (ReceiptDate, WarehouseID, SupplierName, CreatedByUserID)
                 VALUES
@@ -100,7 +101,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-            var cmd = new SqlCommand(@"
+          using  var cmd = new SqlCommand(@"
                 UPDATE GoodsReceipts
                 SET ReceiptDate = @ReceiptDate,
                     WarehouseID = @WarehouseID,
@@ -122,10 +123,41 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-            var cmd = new SqlCommand(
+           using var cmd = new SqlCommand(
                 "DELETE FROM GoodsReceipts WHERE ReceiptID = @ID", conn);
 
             cmd.Parameters.AddWithValue("@ID", id);
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+
+        public static bool ReceiveGoods(GoodsReceipt receipt,int WarehouseID,int UserID,string SupplierName)
+        {
+            DataTable dt=new DataTable();
+            dt.Columns.Add("ProductID", typeof(int));
+            dt.Columns.Add("Quantity",typeof(int));
+            dt.Columns.Add("UnitCost",typeof(decimal));
+
+            foreach (var item in receipt.Details)
+            {
+                dt.Rows.Add(item.ProductID, item.Quantity, item.UnitCost);
+            }
+
+            using var conn = DatabaseHelper.GetConnection();
+            conn.Open();
+
+            using   var cmd = new SqlCommand(
+                "sp_ReceiveGoods", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@WarehouseID", WarehouseID);
+
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.Parameters.AddWithValue("@SupplierName", SupplierName);
+           SqlParameter tvpParm= cmd.Parameters.AddWithValue("@TempTable", dt);
+            tvpParm.SqlDbType =SqlDbType.Structured;
+            tvpParm.TypeName="[TempGoodsReceiptDetails]";
+
 
             return cmd.ExecuteNonQuery() > 0;
         }

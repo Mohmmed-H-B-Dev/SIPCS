@@ -88,22 +88,6 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
-        private void ValidateStock(SalesInvoice invoice)
-        {
-            using var conn = DatabaseHelper.GetConnection();
-            conn.Open();
-            foreach (var detail in invoice.Details)
-            {
-                var cmd = new SqlCommand(
-                    "SELECT Quantity FROM Stock WHERE ProductID=@PID AND WarehouseID=@WH",
-                    conn);
-                cmd.Parameters.AddWithValue("@PID", detail.ProductID);
-                cmd.Parameters.AddWithValue("@WH",  invoice.WarehouseID);
-                var qty = cmd.ExecuteScalar();
-                int available = qty == null ? 0 : Convert.ToInt32(qty);
-                if (available < detail.Quantity)
-                    throw new Exception($"الكمية غير كافية للمنتج: {detail.ProductName}. المتوفر: {available}");
-            }
-        }
+     
     }
 }
