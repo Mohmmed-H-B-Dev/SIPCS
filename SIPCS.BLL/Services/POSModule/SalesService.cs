@@ -1,7 +1,7 @@
 using Microsoft.Data.SqlClient;
+using SIPCS.BLL.Services.CommissionModule;
 using SIPCS.Common.Models;
 using SIPCS.DAL.Helpers;
-using SIPCS.BLL.Services.CommissionModule;
 
 namespace SIPCS.BLL.Services.POSModule
 {
@@ -18,7 +18,7 @@ namespace SIPCS.BLL.Services.POSModule
         public bool ProcessSale(SalesInvoice invoice)
         {
             // تحقق من توفر الكميات أولاً
-            ValidateStock(invoice);
+         // _commissionService.ValidateStock(invoice);
 
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -39,15 +39,15 @@ namespace SIPCS.BLL.Services.POSModule
                     VALUES (@Date,@CustID,@UserID,@WH,@Sub,@Tax,@Disc,@Grand,@Pay);
                     SELECT SCOPE_IDENTITY();", conn, transaction);
 
-                invCmd.Parameters.AddWithValue("@Date",   invoice.InvoiceDate);
+                invCmd.Parameters.AddWithValue("@Date", invoice.InvoiceDate);
                 invCmd.Parameters.AddWithValue("@CustID", invoice.CustomerID);
                 invCmd.Parameters.AddWithValue("@UserID", invoice.UserID);
-                invCmd.Parameters.AddWithValue("@WH",     invoice.WarehouseID);
-                invCmd.Parameters.AddWithValue("@Sub",    invoice.SubTotal);
-                invCmd.Parameters.AddWithValue("@Tax",    invoice.TaxAmount);
-                invCmd.Parameters.AddWithValue("@Disc",   invoice.DiscountAmount);
-                invCmd.Parameters.AddWithValue("@Grand",  invoice.GrandTotal);
-                invCmd.Parameters.AddWithValue("@Pay",    (int)invoice.PaymentType);
+                invCmd.Parameters.AddWithValue("@WH", invoice.WarehouseID);
+                invCmd.Parameters.AddWithValue("@Sub", invoice.SubTotal);
+                invCmd.Parameters.AddWithValue("@Tax", invoice.TaxAmount);
+                invCmd.Parameters.AddWithValue("@Disc", invoice.DiscountAmount);
+                invCmd.Parameters.AddWithValue("@Grand", invoice.GrandTotal);
+                invCmd.Parameters.AddWithValue("@Pay", (int)invoice.PaymentType);
 
                 int invoiceId = Convert.ToInt32(invCmd.ExecuteScalar());
 
@@ -57,20 +57,20 @@ namespace SIPCS.BLL.Services.POSModule
                     var detCmd = new SqlCommand(@"
                         INSERT INTO SalesInvoiceDetails (InvoiceID, ProductID, Quantity, UnitPrice, TotalLine)
                         VALUES (@InvID, @ProdID, @Qty, @Price, @Total)", conn, transaction);
-                    detCmd.Parameters.AddWithValue("@InvID",  invoiceId);
+                    detCmd.Parameters.AddWithValue("@InvID", invoiceId);
                     detCmd.Parameters.AddWithValue("@ProdID", detail.ProductID);
-                    detCmd.Parameters.AddWithValue("@Qty",    detail.Quantity);
-                    detCmd.Parameters.AddWithValue("@Price",  detail.UnitPrice);
-                    detCmd.Parameters.AddWithValue("@Total",  detail.TotalLine);
+                    detCmd.Parameters.AddWithValue("@Qty", detail.Quantity);
+                    detCmd.Parameters.AddWithValue("@Price", detail.UnitPrice);
+                    detCmd.Parameters.AddWithValue("@Total", detail.TotalLine);
                     detCmd.ExecuteNonQuery();
 
                     // اخصم من المخزون
                     var stockCmd = new SqlCommand(
                         "UPDATE Stock SET Quantity = Quantity - @Qty WHERE ProductID=@ProdID AND WarehouseID=@WH",
                         conn, transaction);
-                    stockCmd.Parameters.AddWithValue("@Qty",    detail.Quantity);
+                    stockCmd.Parameters.AddWithValue("@Qty", detail.Quantity);
                     stockCmd.Parameters.AddWithValue("@ProdID", detail.ProductID);
-                    stockCmd.Parameters.AddWithValue("@WH",     invoice.WarehouseID);
+                    stockCmd.Parameters.AddWithValue("@WH", invoice.WarehouseID);
                     stockCmd.ExecuteNonQuery();
                 }
 
@@ -88,6 +88,6 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
-     
+
     }
 }

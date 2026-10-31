@@ -95,11 +95,11 @@ namespace SIPCS.DAL.Repositories
                 INSERT INTO Products (SKU, ProductName, CategoryID, CostPrice, UnitPrice, ReorderLevel)
                 VALUES (@SKU, @ProductName, @CategoryID, @CostPrice, @UnitPrice, @ReorderLevel)",
                 conn);
-            cmd.Parameters.AddWithValue("@SKU",          p.SKU);
-            cmd.Parameters.AddWithValue("@ProductName",  p.ProductName);
-            cmd.Parameters.AddWithValue("@CategoryID",   p.CategoryID);
-            cmd.Parameters.AddWithValue("@CostPrice",    p.CostPrice);
-            cmd.Parameters.AddWithValue("@UnitPrice",    p.UnitPrice);
+            cmd.Parameters.AddWithValue("@SKU", p.SKU);
+            cmd.Parameters.AddWithValue("@ProductName", p.ProductName);
+            cmd.Parameters.AddWithValue("@CategoryID", p.CategoryID);
+            cmd.Parameters.AddWithValue("@CostPrice", p.CostPrice);
+            cmd.Parameters.AddWithValue("@UnitPrice", p.UnitPrice);
             cmd.Parameters.AddWithValue("@ReorderLevel", p.ReorderLevel);
             return cmd.ExecuteNonQuery() > 0;
         }
@@ -113,13 +113,13 @@ namespace SIPCS.DAL.Repositories
                 SET SKU=@SKU, ProductName=@ProductName, CategoryID=@CategoryID,
                     CostPrice=@CostPrice, UnitPrice=@UnitPrice, ReorderLevel=@ReorderLevel
                 WHERE ProductID=@ProductID", conn);
-            cmd.Parameters.AddWithValue("@SKU",          p.SKU);
-            cmd.Parameters.AddWithValue("@ProductName",  p.ProductName);
-            cmd.Parameters.AddWithValue("@CategoryID",   p.CategoryID);
-            cmd.Parameters.AddWithValue("@CostPrice",    p.CostPrice);
-            cmd.Parameters.AddWithValue("@UnitPrice",    p.UnitPrice);
+            cmd.Parameters.AddWithValue("@SKU", p.SKU);
+            cmd.Parameters.AddWithValue("@ProductName", p.ProductName);
+            cmd.Parameters.AddWithValue("@CategoryID", p.CategoryID);
+            cmd.Parameters.AddWithValue("@CostPrice", p.CostPrice);
+            cmd.Parameters.AddWithValue("@UnitPrice", p.UnitPrice);
             cmd.Parameters.AddWithValue("@ReorderLevel", p.ReorderLevel);
-            cmd.Parameters.AddWithValue("@ProductID",    p.ProductID);
+            cmd.Parameters.AddWithValue("@ProductID", p.ProductID);
             return cmd.ExecuteNonQuery() > 0;
         }
 

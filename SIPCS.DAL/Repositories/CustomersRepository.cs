@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
 using SIPCS.Common.Models;
-using System.Threading.Tasks;
 using SIPCS.DAL.Helpers;
-using Microsoft.Data.SqlClient;
 
 namespace SIPCS.DAL.Repositories
 {
@@ -17,12 +14,12 @@ namespace SIPCS.DAL.Repositories
         public List<Customer> GetAll()
         {
             List<Customer> customers = new List<Customer>();
-            using var conn =DatabaseHelper.GetConnection();
-            var cmd =new SqlCommand ("SELECT CustomerID, CustomerName, Phone, TaxNumber FROM Customers", conn);
+            using var conn = DatabaseHelper.GetConnection();
+            var cmd = new SqlCommand("SELECT CustomerID, CustomerName, Phone, TaxNumber FROM Customers", conn);
 
             using var reader = cmd.ExecuteReader();
 
-            while(reader.Read())
+            while (reader.Read())
             {
                 var customer = new Customer
                 {
@@ -40,7 +37,7 @@ namespace SIPCS.DAL.Repositories
 
         public Customer? GetById(int id)
         {
-                        using var conn = DatabaseHelper.GetConnection();
+            using var conn = DatabaseHelper.GetConnection();
             var cmd = new SqlCommand("SELECT 1 FROM Customers WHERE CustomerID = @CustomerID", conn);
             cmd.Parameters.AddWithValue("@CustomerID", id);
 
@@ -62,10 +59,10 @@ namespace SIPCS.DAL.Repositories
 
         public bool Insert(Customer entity)
         {
-         using var conn = DatabaseHelper.GetConnection();
+            using var conn = DatabaseHelper.GetConnection();
             var cmd = new SqlCommand("INSERT INTO Customers (CustomerName, Phone, TaxNumber) VALUES (@CustomerName, @Phone, @TaxNumber)", conn);
             cmd.Parameters.AddWithValue("@CustomerName", entity.CustomerName);
-            cmd.Parameters.AddWithValue("@Phone",(object?)entity.Phone ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@Phone", (object?)entity.Phone ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@TaxNumber", (object?)entity.TaxNumber ?? DBNull.Value);
             int rowsAffected = cmd.ExecuteNonQuery();
             return rowsAffected > 0;

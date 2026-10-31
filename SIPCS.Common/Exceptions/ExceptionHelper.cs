@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using SIPCS.BLL.Exceptions;
 
 namespace SIPCS.Common.Exceptions
@@ -10,19 +8,20 @@ namespace SIPCS.Common.Exceptions
 
 
         public ExceptionHelper() { }
-       
-        public static BusinessException Convert( Exception ex)
+
+        public static BusinessException Convert(Exception ex)
         {
             if (ex is SqlException sqlEx)
             {
                 return new(GetSQLMessage(sqlEx));
-            }else
-                {
+            }
+            else
+            {
                 return new("There an unexpected error: " + ex.Message);
             }
         }
 
-    public static string GetSQLMessage(SqlException ex)
+        public static string GetSQLMessage(SqlException ex)
         {
             return ex.Number switch
             {

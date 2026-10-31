@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SIPCS.BLL.Exceptions
+﻿namespace SIPCS.BLL.Exceptions
 {
     public class BusinessException : Exception
     {

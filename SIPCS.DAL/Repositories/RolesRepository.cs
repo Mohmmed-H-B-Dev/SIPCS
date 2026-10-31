@@ -13,7 +13,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-             using var cmd = new SqlCommand(@"
+            using var cmd = new SqlCommand(@"
                 SELECT RoleID, RoleName, Description
                 FROM Roles
                 ORDER BY RoleName", conn);
@@ -69,7 +69,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-           using  var cmd = new SqlCommand(@"
+            using var cmd = new SqlCommand(@"
                 INSERT INTO Roles (RoleName, Description)
                 VALUES (@RoleName, @Description)", conn);
 
@@ -85,7 +85,7 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-           using  var cmd = new SqlCommand(@"
+            using var cmd = new SqlCommand(@"
                 UPDATE Roles
                 SET RoleName = @RoleName,
                     Description = @Description
@@ -104,8 +104,8 @@ namespace SIPCS.DAL.Repositories
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
 
-           using  var cmd = new SqlCommand(
-                "DELETE FROM Roles WHERE RoleID = @ID", conn);
+            using var cmd = new SqlCommand(
+                 "DELETE FROM Roles WHERE RoleID = @ID", conn);
 
             cmd.Parameters.AddWithValue("@ID", id);
 

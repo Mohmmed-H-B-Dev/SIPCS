@@ -29,7 +29,7 @@ namespace SIPCS.DAL.Repositories
                     FullName    = reader.GetString(reader.GetOrdinal("FullName")),
                     RoleID      = reader.GetInt32(reader.GetOrdinal("RoleID")),
                     IsActive    = reader.GetBoolean(reader.GetOrdinal("IsActive")),
-                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")  ),
+                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate")),
                     RoleName    = reader.GetString(reader.GetOrdinal("RoleName"))
                 });
             }
@@ -106,12 +106,12 @@ namespace SIPCS.DAL.Repositories
                 INSERT INTO Users (Username, PasswordHash, FullName, RoleID, IsActive, CreatedDate)
                 VALUES (@Username, @PasswordHash, @FullName, @RoleID, @IsActive, @CreatedDate)",
                 conn);
-            cmd.Parameters.AddWithValue("@Username",     user.Username);
+            cmd.Parameters.AddWithValue("@Username", user.Username);
             cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
-            cmd.Parameters.AddWithValue("@FullName",     user.FullName);
-            cmd.Parameters.AddWithValue("@RoleID",       user.RoleID);
-            cmd.Parameters.AddWithValue("@IsActive",     user.IsActive);
-            cmd.Parameters.AddWithValue("@CreatedDate",  user.CreatedDate);
+            cmd.Parameters.AddWithValue("@FullName", user.FullName);
+            cmd.Parameters.AddWithValue("@RoleID", user.RoleID);
+            cmd.Parameters.AddWithValue("@IsActive", user.IsActive);
+            cmd.Parameters.AddWithValue("@CreatedDate", user.CreatedDate);
             return cmd.ExecuteNonQuery() > 0;
         }
 
@@ -124,9 +124,9 @@ namespace SIPCS.DAL.Repositories
                 SET FullName = @FullName, RoleID = @RoleID, IsActive = @IsActive
                 WHERE UserID = @UserID", conn);
             cmd.Parameters.AddWithValue("@FullName", user.FullName);
-            cmd.Parameters.AddWithValue("@RoleID",   user.RoleID);
+            cmd.Parameters.AddWithValue("@RoleID", user.RoleID);
             cmd.Parameters.AddWithValue("@IsActive", user.IsActive);
-            cmd.Parameters.AddWithValue("@UserID",   user.UserID);
+            cmd.Parameters.AddWithValue("@UserID", user.UserID);
             return cmd.ExecuteNonQuery() > 0;
         }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
-using SIPCS.Common.Models;
 using SIPCS.Common.Enums;
+using SIPCS.Common.Models;
 using SIPCS.DAL.Helpers;
 
 namespace SIPCS.DAL.Repositories

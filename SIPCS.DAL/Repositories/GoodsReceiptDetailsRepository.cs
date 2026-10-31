@@ -71,7 +71,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(GoodsReceiptDetail   goodsReceiptDetails)
+        public bool Insert(GoodsReceiptDetail goodsReceiptDetails)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

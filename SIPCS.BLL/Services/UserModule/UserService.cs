@@ -1,7 +1,6 @@
 using SIPCS.Common.Exceptions;
 using SIPCS.Common.Models;
 using SIPCS.DAL.Repositories;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -41,7 +40,7 @@ namespace SIPCS.BLL.Services.UserModule
             catch (Exception ex)
             {
                 // Log the exception or handle it as needed
-              throw ExceptionHelper.Convert(ex);
+                throw ExceptionHelper.Convert(ex);
             }
             return false;
         }
@@ -51,7 +50,8 @@ namespace SIPCS.BLL.Services.UserModule
         /// </summary>
         public void Logout() => CurrentUser = null;
 
-        public List<User> GetAllUsers() {
+        public List<User> GetAllUsers()
+        {
             List<User> users = new List<User>();
             try
             {
@@ -64,10 +64,10 @@ namespace SIPCS.BLL.Services.UserModule
             {
                 // Log the exception or handle it as needed
                 throw ExceptionHelper.Convert(ex);
-             
+
 
             }
-        
+
             return users;
         }
 
@@ -81,8 +81,8 @@ namespace SIPCS.BLL.Services.UserModule
 
                 user.PasswordHash = HashPassword(plainPassword);
 
-                 if(_repo.Insert(user))
-                     return true;
+                if (_repo.Insert(user))
+                    return true;
 
             }
             catch (Exception ex)
@@ -91,16 +91,18 @@ namespace SIPCS.BLL.Services.UserModule
                 throw ExceptionHelper.Convert(ex);
 
             }
-               return false;
+            return false;
         }
 
-        public bool UpdateUser(User user) {_repo.Update(user);
+        public bool UpdateUser(User user)
+        {
+            _repo.Update(user);
             try
             {
                 if (!IsAdmin())
                     throw new UnauthorizedAccessException("You Do not have permission for Update Users.");
 
-                if(_repo.Update(user))
+                if (_repo.Update(user))
                     return true;
             }
             catch (Exception ex)

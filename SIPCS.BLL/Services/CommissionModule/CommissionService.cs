@@ -31,7 +31,7 @@ namespace SIPCS.BLL.Services.CommissionModule
             using var reader = ruleCmd.ExecuteReader();
             if (!reader.Read()) return;
 
-            int targetType    = reader.GetInt32(0);
+            int targetType = reader.GetInt32(0);
             decimal ruleValue = reader.GetDecimal(1);
             reader.Close();
 
@@ -44,10 +44,10 @@ namespace SIPCS.BLL.Services.CommissionModule
             var insertCmd = new SqlCommand(@"
                 INSERT INTO EmployeeCommissions (InvoiceID, UserID, CommissionAmount, IsPaid, CreatedDate)
                 VALUES (@InvID, @UserID, @Amount, 0, @Date)", conn, transaction);
-            insertCmd.Parameters.AddWithValue("@InvID",  invoiceId);
+            insertCmd.Parameters.AddWithValue("@InvID", invoiceId);
             insertCmd.Parameters.AddWithValue("@UserID", userId);
             insertCmd.Parameters.AddWithValue("@Amount", commissionAmount);
-            insertCmd.Parameters.AddWithValue("@Date",   DateTime.Now);
+            insertCmd.Parameters.AddWithValue("@Date", DateTime.Now);
             insertCmd.ExecuteNonQuery();
         }
 
@@ -69,7 +69,7 @@ namespace SIPCS.BLL.Services.CommissionModule
                 WHERE ec.CreatedDate BETWEEN @From AND @To
                 ORDER BY ec.CreatedDate DESC", conn);
             cmd.Parameters.AddWithValue("@From", from.Date);
-            cmd.Parameters.AddWithValue("@To",   to.Date.AddDays(1).AddSeconds(-1));
+            cmd.Parameters.AddWithValue("@To", to.Date.AddDays(1).AddSeconds(-1));
 
             using var reader = cmd.ExecuteReader();
             while (reader.Read())

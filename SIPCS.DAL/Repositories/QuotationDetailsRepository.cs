@@ -71,8 +71,8 @@ namespace SIPCS.DAL.Repositories
 
             return null;
         }
-            
-        public bool Insert(QuotationDetail  quotationDetail)
+
+        public bool Insert(QuotationDetail quotationDetail)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

@@ -59,7 +59,7 @@ WHERE s.WarehouseID = @WarehouseID
 ORDER BY w.WarehouseName, p.ProductName", conn);
 
             cmd.Parameters.AddWithValue("@WarehouseID", warehouseID);
-    
+
             using var reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -116,7 +116,7 @@ ORDER BY w.WarehouseName, p.ProductName", conn);
         }
 
 
-        public Stock? GetById(int idStock,int idWarehouse)
+        public Stock? GetById(int idStock, int idWarehouse)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -130,7 +130,7 @@ ORDER BY w.WarehouseName, p.ProductName", conn);
                 WHERE s.StockID = @StockID AND s.WarehouseID = @WarehouseID", conn);
 
             cmd.Parameters.AddWithValue("@StockID", idStock);
-            cmd.Parameters.AddWithValue("@WarehouseID", idWarehouse);   
+            cmd.Parameters.AddWithValue("@WarehouseID", idWarehouse);
 
             using var reader = cmd.ExecuteReader();
 

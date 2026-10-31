@@ -1,5 +1,4 @@
 using SIPCS.Common.Enums;
-using System.Data;
 
 namespace SIPCS.Common.Models
 {
@@ -9,7 +8,7 @@ namespace SIPCS.Common.Models
 
         public static string GetNamePayment(PaymentType t)
         {
-           return t switch
+            return t switch
             {
                 PaymentType.Cash => "Cash",
                 PaymentType.Card => "Card",
@@ -18,7 +17,7 @@ namespace SIPCS.Common.Models
             };
 
         }
-        public static PaymentType  GetTypeOfPayment(string str)
+        public static PaymentType GetTypeOfPayment(string str)
         {
             return str switch
             {
@@ -27,8 +26,8 @@ namespace SIPCS.Common.Models
                 "Credit" => PaymentType.Credit,
                 _ => PaymentType.Unknown,
             };
-              
-           
+
+
 
         }
         public int InvoiceID { get; set; }

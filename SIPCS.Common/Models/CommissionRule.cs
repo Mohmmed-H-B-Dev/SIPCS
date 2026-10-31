@@ -1,5 +1,4 @@
 using SIPCS.Common.Enums;
-using System.Dynamic;
 
 namespace SIPCS.Common.Models
 {
@@ -10,15 +9,15 @@ namespace SIPCS.Common.Models
         public CommissionTargetType TargetType { get; set; }
         public decimal CommissionValue { get; set; }  // نسبة % أو مبلغ ثابت
 
-         public decimal MinimumTargetAmount { get; set; }  // الحد الأدنى للهدف
+        public decimal MinimumTargetAmount { get; set; }  // الحد الأدنى للهدف
         public TargetPeriodType TargetPeriod { get; set; }  // فترة الهدف (مثلاً:  
-  //      شهري، ربع سنوي، سنوي)
+                                                            //      شهري، ربع سنوي، سنوي)
         public string CommissionType { get; set; }  //Sales , Product.that means the commission is based on sales or Specific product
         public string? RoleName { get; set; }
 
         public string GetNameCommissionTargetType(CommissionTargetType commissionTargetType)
         {
-           return commissionTargetType switch
+            return commissionTargetType switch
             {
                 CommissionTargetType.Daily => "Daily",
                 CommissionTargetType.Monthly => "Monthly",

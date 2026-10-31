@@ -111,6 +111,6 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-       
+
     }
 }

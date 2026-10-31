@@ -7,7 +7,7 @@ namespace SIPCS.Common.Enums
     {
         Cash = 1,    // نقدي
         Card = 2,    // بطاقة شبكة
-        Credit = 3 ,  // آجل (على حساب العميل)
+        Credit = 3,  // آجل (على حساب العميل)
         Unknown = 4   // غير معروف
     }
 }

@@ -88,7 +88,7 @@ namespace SIPCS.DAL.Repositories
                     TaxAmount = reader.GetDecimal(reader.GetOrdinal("TaxAmount")),
                     DiscountAmount = reader.GetDecimal(reader.GetOrdinal("DiscountAmount")),
                     GrandTotal = reader.GetDecimal(reader.GetOrdinal("GrandTotal")),
-                    PaymentType =SalesInvoice.GetTypeOfPayment( reader.GetString(reader.GetOrdinal("PaymentType"))),
+                    PaymentType =SalesInvoice.GetTypeOfPayment(reader.GetString(reader.GetOrdinal("PaymentType"))),
                     CustomerName = reader.GetString(reader.GetOrdinal("CustomerName")),
                     UserName = reader.GetString(reader.GetOrdinal("UserName")),
                     WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName"))
@@ -120,7 +120,7 @@ namespace SIPCS.DAL.Repositories
             cmd.Parameters.AddWithValue("@TaxAmount", salesInvoices.TaxAmount);
             cmd.Parameters.AddWithValue("@DiscountAmount", salesInvoices.DiscountAmount);
             cmd.Parameters.AddWithValue("@GrandTotal", salesInvoices.GrandTotal);
-            cmd.Parameters.AddWithValue("@PaymentType", SalesInvoice.GetNamePayment(salesInvoices.PaymentType) );
+            cmd.Parameters.AddWithValue("@PaymentType", SalesInvoice.GetNamePayment(salesInvoices.PaymentType));
 
             return cmd.ExecuteNonQuery() > 0;
         }

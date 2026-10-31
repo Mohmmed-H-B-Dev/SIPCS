@@ -5,10 +5,10 @@ namespace SIPCS.Common.Enums
     /// </summary>
     public enum CommissionTargetType
     {
-        Daily = 1, 
-         Monthly = 2   ,    
-        Quarterly = 3,  
-        Yearly = 4     
+        Daily = 1,
+        Monthly = 2,
+        Quarterly = 3,
+        Yearly = 4
 
 
     }
