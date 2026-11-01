@@ -11,7 +11,7 @@ namespace SIPCS.BLL.Services.UserModule
     /// </summary>
     public class UserService
     {
-        private readonly UserRepository _repo = new();
+    //    private readonly UserRepository _repo = new();
 
         public static User? CurrentUser { get; private set; }
 
@@ -28,7 +28,7 @@ namespace SIPCS.BLL.Services.UserModule
             {
 
 
-                var user = _repo.Login(username, hashedPassword);
+                var user = UserRepository.Login(username, hashedPassword);
 
                 if (user != null)
                 {
@@ -58,7 +58,7 @@ namespace SIPCS.BLL.Services.UserModule
                 if (!IsAdmin())
                     throw new UnauthorizedAccessException("This User Does not have permission.");
 
-                users = _repo.GetAll();
+                users = UserRepository.GetAll();
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace SIPCS.BLL.Services.UserModule
 
                 user.PasswordHash = HashPassword(plainPassword);
 
-                if (_repo.Insert(user))
+                if (UserRepository.Insert(user))
                     return true;
 
             }
@@ -96,13 +96,13 @@ namespace SIPCS.BLL.Services.UserModule
 
         public bool UpdateUser(User user)
         {
-            _repo.Update(user);
+            UserRepository.Update(user);
             try
             {
                 if (!IsAdmin())
                     throw new UnauthorizedAccessException("You Do not have permission for Update Users.");
 
-                if (_repo.Update(user))
+                if (UserRepository.Update(user))
                     return true;
             }
             catch (Exception ex)

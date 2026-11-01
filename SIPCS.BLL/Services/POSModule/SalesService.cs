@@ -1,7 +1,10 @@
 using Microsoft.Data.SqlClient;
 using SIPCS.BLL.Services.CommissionModule;
+using SIPCS.Common.Exceptions;
 using SIPCS.Common.Models;
 using SIPCS.DAL.Helpers;
+using SIPCS.DAL.Repositories;
+using System.Data;
 
 namespace SIPCS.BLL.Services.POSModule
 {
@@ -10,7 +13,7 @@ namespace SIPCS.BLL.Services.POSModule
     /// </summary>
     public class SalesService
     {
-        private readonly CommissionService _commissionService = new();
+     //   private readonly CommissionService _commissionService = new();
 
         /// <summary>
         /// إتمام عملية البيع وخصم الكمية من المخزون واحتساب العمولة
@@ -27,9 +30,9 @@ namespace SIPCS.BLL.Services.POSModule
             try
             {
                 // 1. احسب الإجماليات
-                invoice.SubTotal    = invoice.Details.Sum(d => d.TotalLine);
-                invoice.TaxAmount   = Math.Round(invoice.SubTotal * 0.15m, 2); // 15% ضريبة
-                invoice.GrandTotal  = invoice.SubTotal + invoice.TaxAmount - invoice.DiscountAmount;
+             //   invoice.SubTotal    = invoice.Details.Sum(d => d.TotalLine);
+              //  invoice.TaxAmount   = Math.Round(invoice.SubTotal * 0.15m, 2); // 15% ضريبة
+            //    invoice.GrandTotal  = invoice.SubTotal + invoice.TaxAmount - invoice.DiscountAmount;
 
                 // 2. أدخل الفاتورة
                 var invCmd = new SqlCommand(@"
@@ -88,6 +91,27 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
+        public static DataTable GetAllProducts(int WarehouseID)
+        {
+            try
+            {
 
+
+                DataTable Products =  StockRepository.GetAll(WarehouseID);
+
+                if (Products != null)
+                {
+                    
+                    return Products;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw ExceptionHelper.Convert(ex);
+            }
+            return null;
+        }
     }
 }

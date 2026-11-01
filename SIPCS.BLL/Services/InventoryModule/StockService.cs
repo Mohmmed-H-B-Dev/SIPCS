@@ -9,7 +9,7 @@ namespace SIPCS.BLL.Services.InventoryModule
     /// </summary>
     public class StockService
     {
-        private readonly StockRepository _StockRepo = new();
+     //   private readonly StockRepository _StockRepo = new();
 
         /// <summary>
         /// Get all stock items || optionally filtered by warehouse ID.

@@ -7,7 +7,11 @@ namespace SIPCS.DAL.Repositories
 {
     public class CommissionRulesRepository : IRepository<CommissionRule>
     {
-        public List<CommissionRule> GetAll()
+        public CommissionRulesRepository()
+        {
+        }
+
+        public static List<CommissionRule> GetAll()
         {
             var rules = new List<CommissionRule>();
 
@@ -43,7 +47,7 @@ namespace SIPCS.DAL.Repositories
             return rules;
         }
 
-        public CommissionRule? GetById(int id)
+        public  static CommissionRule? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -79,7 +83,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(CommissionRule commissionRules)
+        public static bool Insert(CommissionRule commissionRules)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -103,7 +107,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(CommissionRule commissionRules)
+        public static bool Update(CommissionRule commissionRules)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -129,7 +133,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
