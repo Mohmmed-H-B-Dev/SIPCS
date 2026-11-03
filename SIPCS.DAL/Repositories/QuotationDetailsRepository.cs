@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class QuotationDetailsRepository : IRepository<QuotationDetail>
     {
-        public List<QuotationDetail> GetAll()
+        public static List<QuotationDetail> GetAll()
         {
             var details = new List<QuotationDetail>();
 
@@ -39,7 +39,7 @@ namespace SIPCS.DAL.Repositories
             return details;
         }
 
-        public QuotationDetail? GetById(int id)
+        public static QuotationDetail? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -72,7 +72,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(QuotationDetail quotationDetail)
+        public static bool Insert(QuotationDetail quotationDetail)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -92,7 +92,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(QuotationDetail quotationDetails)
+        public static bool Update(QuotationDetail quotationDetails)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -114,7 +114,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

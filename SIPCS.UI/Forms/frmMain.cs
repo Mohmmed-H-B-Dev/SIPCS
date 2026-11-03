@@ -1,4 +1,6 @@
-﻿namespace SIPCS.UI.Forms
+﻿using SIPCS.UI.Forms.POS;
+
+namespace SIPCS.UI.Forms
 {
     public partial class frmMain : SIPCS.UI.Forms.SIPCSStyles
     {
@@ -25,9 +27,10 @@
             //    المبيعات، التقارير، الإعدادات، والعمولات.
             //    عند النقر على أي زر، سيتم عرض رسالة تفيد بأن الوحدة قيد الإنشاء.
 
+            POS_Main pOS = new POS_Main();
+            pOS.ShowDialog();
 
-
-            MessageBox.Show("🚧 POS module is under construction.", "SIPCS");
+           // MessageBox.Show("🚧 POS module is under construction.", "SIPCS");
 
         }
 

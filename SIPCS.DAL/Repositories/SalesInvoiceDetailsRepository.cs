@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class SalesInvoiceDetailsRepository : IRepository<SalesInvoiceDetail>
     {
-        public List<SalesInvoiceDetail> GetAll()
+        public static List<SalesInvoiceDetail> GetAll()
         {
             var details = new List<SalesInvoiceDetail>();
 
@@ -40,7 +40,7 @@ namespace SIPCS.DAL.Repositories
             return details;
         }
 
-        public SalesInvoiceDetail? GetById(int id)
+        public static SalesInvoiceDetail? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -74,7 +74,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(SalesInvoiceDetail salesInvoiceDetails)
+        public static bool Insert(SalesInvoiceDetail salesInvoiceDetails)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -95,7 +95,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(SalesInvoiceDetail salesInvoiceDetails)
+        public static bool Update(SalesInvoiceDetail salesInvoiceDetails)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -119,7 +119,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

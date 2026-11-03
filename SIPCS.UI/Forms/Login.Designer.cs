@@ -140,7 +140,7 @@
             ClientSize = new Size(538, 333);
             Controls.Add(lblTitleApp);
             Controls.Add(panel1);
-            MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Login";
             Text = "Login";
             panel1.ResumeLayout(false);

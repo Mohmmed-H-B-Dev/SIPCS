@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class WarehousesRepository : IRepository<Warehouse>
     {
-        public List<Warehouse> GetAll()
+        public static List<Warehouse> GetAll()
         {
             var warehouses = new List<Warehouse>();
             using var conn = DatabaseHelper.GetConnection();
@@ -34,7 +34,7 @@ namespace SIPCS.DAL.Repositories
             return warehouses;
         }
 
-        public Warehouse? GetById(int id)
+        public static Warehouse? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -63,7 +63,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(Warehouse warehouses)
+        public static bool Insert(Warehouse warehouses)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -79,7 +79,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(Warehouse warehouses)
+        public static bool Update(Warehouse warehouses)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -98,7 +98,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class EmployeeCommissionsRepository : IRepository<EmployeeCommission>
     {
-        public List<EmployeeCommission> GetAll()
+        public static List<EmployeeCommission> GetAll()
         {
             var commissions = new List<EmployeeCommission>();
 
@@ -43,7 +43,7 @@ namespace SIPCS.DAL.Repositories
             return commissions;
         }
 
-        public EmployeeCommission? GetById(int id)
+        public static EmployeeCommission? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -80,7 +80,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(EmployeeCommission employeeCommissions)
+        public static bool Insert(EmployeeCommission employeeCommissions)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -101,7 +101,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(EmployeeCommission employeeCommissions)
+        public static bool Update(EmployeeCommission employeeCommissions)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -123,7 +123,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

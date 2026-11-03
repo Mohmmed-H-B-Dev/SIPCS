@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class SalesTargetsRepository : IRepository<SalesTarget>
     {
-        public List<SalesTarget> GetAll()
+        public static List<SalesTarget> GetAll()
         {
             var targets = new List<SalesTarget>();
 
@@ -40,7 +40,7 @@ namespace SIPCS.DAL.Repositories
             return targets;
         }
 
-        public SalesTarget? GetById(int id)
+        public static SalesTarget? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -74,7 +74,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(SalesTarget salesTargets)
+        public static bool Insert(SalesTarget salesTargets)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -95,7 +95,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(SalesTarget salesTargets)
+        public static bool Update(SalesTarget salesTargets)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -119,7 +119,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

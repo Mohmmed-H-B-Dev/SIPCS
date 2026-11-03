@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class RolesRepository : IRepository<Role>
     {
-        public List<Role> GetAll()
+        public static List<Role> GetAll()
         {
             var roles = new List<Role>();
 
@@ -35,7 +35,7 @@ namespace SIPCS.DAL.Repositories
             return roles;
         }
 
-        public Role? GetById(int id)
+        public static Role? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -64,7 +64,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(Role roles)
+        public static bool Insert(Role roles)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -80,7 +80,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(Role roles)
+        public static bool Update(Role roles)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -99,7 +99,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

@@ -37,6 +37,7 @@
             BackColor = Color.FromArgb(56, 77, 253);
             ClientSize = new Size(945, 450);
             ForeColor = Color.FromArgb(119, 139, 253);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SIPCSStyles";

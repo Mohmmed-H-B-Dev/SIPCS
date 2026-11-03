@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class CategoriesRepository : IRepository<Category>
     {
-        public List<Category> GetAll()
+        public static List<Category> GetAll()
         {
             var categories = new List<Category>();
             using var conn = DatabaseHelper.GetConnection();
@@ -31,7 +31,7 @@ namespace SIPCS.DAL.Repositories
             return categories;
         }
 
-        public Category? GetById(int id)
+        public static Category? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -57,7 +57,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(Category category)
+        public static bool Insert(Category category)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -71,7 +71,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(Category category)
+        public static bool Update(Category category)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -87,7 +87,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

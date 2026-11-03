@@ -1,6 +1,7 @@
 using SIPCS.Common.Exceptions;
 using SIPCS.Common.Models;
 using SIPCS.DAL.Repositories;
+using System.Data;
 
 namespace SIPCS.BLL.Services.InventoryModule
 {
@@ -14,17 +15,16 @@ namespace SIPCS.BLL.Services.InventoryModule
         /// <summary>
         /// Get all stock items || optionally filtered by warehouse ID.
         /// </summary>
-        public List<Stock> GetAllStock(int? warehouseId = null)
+        public List<Stock> GetAllStockData()
         {
             var list = new List<Stock>();
-
-
+         
+            
             try
             {
-                if (warehouseId.HasValue)
-                    list = _StockRepo.GetAll(warehouseId.Value);
-                else
-                    list = _StockRepo.GetAll();
+               
+               
+                    list = StockRepository.GetAll();
             }
             catch (Exception ex)
             {
@@ -33,16 +33,36 @@ namespace SIPCS.BLL.Services.InventoryModule
             }
 
 
-
             return list;
         }
+        public static List<Common_StockDetails> GetAllProducts(int WarehouseID)
+        {
+            try
+            {
 
+
+                List<Common_StockDetails> Products = StockRepository.GetAll(WarehouseID);
+
+                if (Products != null)
+                {
+
+                    return Products;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw ExceptionHelper.Convert(ex);
+            }
+            return null;
+        }
         /// <summary>
         /// Get all stock items that are below their reorder level.
         /// </summary>
         public List<Stock> GetLowStockItems()
         {
-            return GetAllStock().Where(s => s.IsLowStock).ToList();
+            return GetAllStockData().Where(s => s.IsLowStock).ToList();
         }
 
         /// <summary>

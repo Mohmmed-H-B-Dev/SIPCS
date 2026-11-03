@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class ProductRepository : IRepository<Product>
     {
-        public List<Product> GetAll()
+        public static List<Product> GetAll()
         {
             var list = new List<Product>();
             using var conn = DatabaseHelper.GetConnection();
@@ -35,7 +35,7 @@ namespace SIPCS.DAL.Repositories
             return list;
         }
 
-        public Product? GetById(int id)
+        public static Product? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -61,7 +61,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public Product? GetBySKU(string sku)
+        public static Product? GetBySKU(string sku)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -87,7 +87,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(Product p)
+        public static bool Insert(Product p)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -104,7 +104,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(Product p)
+        public static bool Update(Product p)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -123,7 +123,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

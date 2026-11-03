@@ -6,7 +6,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class UserRepository : IRepository<User>
     {
-        public List<User> GetAll()
+        public static List<User> GetAll()
         {
             var users = new List<User>();
             using var conn = DatabaseHelper.GetConnection();
@@ -36,7 +36,7 @@ namespace SIPCS.DAL.Repositories
             return users;
         }
 
-        public User? GetById(int id)
+        public static User? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -65,7 +65,7 @@ namespace SIPCS.DAL.Repositories
         /// <summary>
         /// تسجيل الدخول - يرجع المستخدم إن وُجد وإلا null
         /// </summary>
-        public User? Login(string username, string passwordHash)
+        public static User? Login(string username, string passwordHash)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -98,7 +98,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(User user)
+        public static bool Insert(User user)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -115,7 +115,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Update(User user)
+        public static bool Update(User user)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -130,7 +130,7 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

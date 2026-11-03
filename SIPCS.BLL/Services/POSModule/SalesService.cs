@@ -78,7 +78,7 @@ namespace SIPCS.BLL.Services.POSModule
                 }
 
                 // 4. احسب عمولة الموظف
-                _commissionService.CalculateCommission(invoiceId, invoice.UserID, invoice.GrandTotal, conn, transaction);
+                CommissionService.CalculateCommission(invoiceId, invoice.UserID, invoice.GrandTotal, conn, transaction);
 
                 transaction.Commit();
                 invoice.InvoiceID = invoiceId;
@@ -91,27 +91,6 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
-        public static DataTable GetAllProducts(int WarehouseID)
-        {
-            try
-            {
-
-
-                DataTable Products =  StockRepository.GetAll(WarehouseID);
-
-                if (Products != null)
-                {
-                    
-                    return Products;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it as needed
-                throw ExceptionHelper.Convert(ex);
-            }
-            return null;
-        }
+       
     }
 }

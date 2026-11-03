@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIPCS.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace SIPCS.UI.General_Classes
 {
     public class POS_General
     {
-        public static DataTable dtItemsWarehouse {  get; set; }
+        public static List<Common_StockDetails> lItemsWarehouse {  get; set; }
 
+      
         //General Info
 
         static int IdWarehouse = 1;

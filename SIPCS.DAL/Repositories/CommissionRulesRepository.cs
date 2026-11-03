@@ -7,9 +7,7 @@ namespace SIPCS.DAL.Repositories
 {
     public class CommissionRulesRepository : IRepository<CommissionRule>
     {
-        public CommissionRulesRepository()
-        {
-        }
+     
 
         public static List<CommissionRule> GetAll()
         {

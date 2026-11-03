@@ -12,7 +12,7 @@ namespace SIPCS.BLL.Services.CommissionModule
         /// <summary>
         /// احتساب عمولة الموظف عند إتمام الفاتورة
         /// </summary>
-        public void CalculateCommission(int invoiceId, int userId, decimal grandTotal,
+        public static void CalculateCommission(int invoiceId, int userId, decimal grandTotal,
             SqlConnection conn, SqlTransaction transaction)
         {
             // جلب دور الموظف

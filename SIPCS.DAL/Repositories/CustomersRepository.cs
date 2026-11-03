@@ -11,7 +11,7 @@ namespace SIPCS.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetAll()
+        public static List<Customer> GetAll()
         {
             List<Customer> customers = new List<Customer>();
             using var conn = DatabaseHelper.GetConnection();
@@ -35,7 +35,7 @@ namespace SIPCS.DAL.Repositories
             return customers;
         }
 
-        public Customer? GetById(int id)
+        public static Customer? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             var cmd = new SqlCommand("SELECT 1 FROM Customers WHERE CustomerID = @CustomerID", conn);
@@ -57,7 +57,7 @@ namespace SIPCS.DAL.Repositories
             return null;
         }
 
-        public bool Insert(Customer entity)
+        public static bool Insert(Customer entity)
         {
             using var conn = DatabaseHelper.GetConnection();
             var cmd = new SqlCommand("INSERT INTO Customers (CustomerName, Phone, TaxNumber) VALUES (@CustomerName, @Phone, @TaxNumber)", conn);
@@ -68,7 +68,7 @@ namespace SIPCS.DAL.Repositories
             return rowsAffected > 0;
         }
 
-        public bool Update(Customer entity)
+        public static bool Update(Customer entity)
         {
             using var conn = DatabaseHelper.GetConnection();
             var cmd = new SqlCommand("UPDATE Customers SET CustomerName = @CustomerName, Phone = @Phone, TaxNumber = @TaxNumber WHERE CustomerID = @CustomerID", conn);

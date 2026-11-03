@@ -49,9 +49,9 @@ ORDER BY w.WarehouseName, p.ProductName";
         /// </summary>
         /// <param name="WarehouseID"></param>
         /// <returns>DataTable  of a view Products in this Warehouse </returns>
-        public static DataTable GetAll(int WarehouseID)
+        public static List<Common_StockDetails> GetAll(int WarehouseID)
         {
-            DataTable stock = new DataTable();
+            //DataTable stock = new DataTable();
 
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -70,12 +70,34 @@ ORDER BY w.WarehouseName, p.ProductName
 
             cmd.Parameters.AddWithValue("@WarehouseID", WarehouseID);
 
+            var stocks = new List<Common_StockDetails>();
+
             using var reader = cmd.ExecuteReader();
+            int index = 0;
+            while (reader.Read())
+            {
+                var stock = new Common_StockDetails();
+                stock.Index= index;
+                stock.StockID = reader.GetInt32(reader.GetOrdinal("StockID"));
+                stock.WarehouseID = reader.GetInt32(reader.GetOrdinal("WarehouseID"));
+                stock.ProductID = reader.GetInt32(reader.GetOrdinal("ProductID"));
+                stock.Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity"));
 
-            if(reader.Read())
-                stock.Load(reader);
+                stock.WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName"));
 
-            return stock;
+                stock.ProductName = reader.GetString(reader.GetOrdinal("ProductName"));
+                stock.SKU = reader.GetString(reader.GetOrdinal("SKU"));
+                stock.ReorderLevel = reader.GetInt32(reader.GetOrdinal("ReorderLevel"));
+                stock.UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice"));
+
+                stock.CategoryName = reader.GetString(reader.GetOrdinal("CategoryName"));
+
+                stocks.Add(stock);
+                index++;
+            }
+
+            return stocks;
+          
         }
 
         public static Stock? GetById(int id)

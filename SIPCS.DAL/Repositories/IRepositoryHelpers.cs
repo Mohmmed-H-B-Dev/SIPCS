@@ -1,7 +1,10 @@
 ﻿namespace SIPCS.DAL.Repositories
 {
-    internal static interface IRepositoryHelpers<T>
+    internal  interface IRepositoryHelpers<T>
     {
-        T? GetById(int id);
+        static T? GetById(int id)
+        {
+            return default; // ضمان إرجاع قيمة حتى لو لم يتحقق الشرط
+        }
     }
 }

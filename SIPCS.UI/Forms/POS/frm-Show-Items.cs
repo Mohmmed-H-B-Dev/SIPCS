@@ -1,4 +1,7 @@
-﻿using System;
+﻿using SIPCS.BLL.Services.InventoryModule;
+using SIPCS.Common.Models;
+using SIPCS.UI.General_Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +15,8 @@ namespace SIPCS.UI.Forms.POS
 {
     public partial class frm_Show_Items : SIPCS.UI.Forms.SIPCSStyles
     {
+        public delegate void frm_Show_ItemsEventHandler(string SKU);
+        public event frm_Show_ItemsEventHandler onGetItem;
         public frm_Show_Items()
         {
             InitializeComponent();
@@ -19,20 +24,20 @@ namespace SIPCS.UI.Forms.POS
 
         void _LoadDate()
         {
-            DataTable dt = new DataTable();
-            dt=BLL.Services.POSModule.SalesService.GetAllProducts(-1);
-            General_Classes.POS_General.dtItemsWarehouse=dt;
+            List<Common_StockDetails> ls = new List<Common_StockDetails>();
+            ls=StockService.GetAllProducts(-1);
+            General_Classes.POS_General.lItemsWarehouse=ls;
             //string SKC = "";
             //string UnitPrice = "";
             //string ProductName = "";
             //string Quantity = "";
             //string CategoryName = "";
-            if (dt.Rows.Count > 0)
+            if (ls.Count > 0)
             {
-                foreach (DataRow item in dt.Rows)
+                foreach (Common_StockDetails item in ls)
                 {
 
-                    dgvCartMenuItems.Rows.Add(item["SKC"], item["ProductName"], item["CategoryName"], item["Quantity"], item["UnitPrice"]);
+                    dgvCartMenuItems.Rows.Add(item.SKU, item.ProductName, item.CategoryName, item.Quantity, item.UnitPrice);
                 }
             }
 
@@ -44,10 +49,21 @@ namespace SIPCS.UI.Forms.POS
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //we return data row use observable  because we need update general data table 
-            عشان لما نضيف عصنر للسلة ينقص من الداتا تيبول الاساسي عشان مانضيف كميات بلا حدود ونبيع فاتورة ونتفاجاء ان 
-                ان محتوى السلة من الكمية اكبر من المخزون
+            if (dgvCartMenuItems.Rows.Count<=0||dgvCartMenuItems.CurrentRow.Cells[0]==null)
+                return;
             
+            //we return data row use observable  because we need update general data table 
+            if (onGetItem != null)
+            {
+                onGetItem?.Invoke(dgvCartMenuItems.CurrentRow.Cells[0].ToString());
+            }
+
+          
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
