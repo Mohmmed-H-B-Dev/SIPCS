@@ -32,8 +32,8 @@
             label4 = new Label();
             button2 = new Button();
             btnReports = new Button();
-            btnCommissions = new Button();
-            btnPOS = new Button();
+            btnDeleteInvoice = new Button();
+            btnPayments = new Button();
             btnShowItems = new Button();
             lblWelcom = new Label();
             lblRole = new Label();
@@ -63,8 +63,8 @@
             panel1.Controls.Add(label4);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(btnReports);
-            panel1.Controls.Add(btnCommissions);
-            panel1.Controls.Add(btnPOS);
+            panel1.Controls.Add(btnDeleteInvoice);
+            panel1.Controls.Add(btnPayments);
             panel1.Controls.Add(btnShowItems);
             panel1.Controls.Add(lblWelcom);
             panel1.Controls.Add(lblRole);
@@ -107,34 +107,37 @@
             btnReports.Name = "btnReports";
             btnReports.Size = new Size(279, 49);
             btnReports.TabIndex = 3;
-            btnReports.Text = "📊 Reports";
+            btnReports.Text = " \U0001f9fe Invoices";
             btnReports.UseVisualStyleBackColor = false;
+            btnReports.Click += btnReports_Click;
             // 
-            // btnCommissions
+            // btnDeleteInvoice
             // 
-            btnCommissions.BackColor = Color.FromArgb(30, 41, 53);
-            btnCommissions.FlatAppearance.BorderColor = Color.FromArgb(52, 65, 35);
-            btnCommissions.FlatStyle = FlatStyle.Flat;
-            btnCommissions.Font = new Font("Segoe UI", 15F);
-            btnCommissions.Location = new Point(3, 261);
-            btnCommissions.Name = "btnCommissions";
-            btnCommissions.Size = new Size(279, 49);
-            btnCommissions.TabIndex = 2;
-            btnCommissions.Text = "💰  Commissions";
-            btnCommissions.UseVisualStyleBackColor = false;
+            btnDeleteInvoice.BackColor = Color.FromArgb(30, 41, 53);
+            btnDeleteInvoice.FlatAppearance.BorderColor = Color.FromArgb(52, 65, 35);
+            btnDeleteInvoice.FlatStyle = FlatStyle.Flat;
+            btnDeleteInvoice.Font = new Font("Segoe UI", 15F);
+            btnDeleteInvoice.Location = new Point(3, 261);
+            btnDeleteInvoice.Name = "btnDeleteInvoice";
+            btnDeleteInvoice.Size = new Size(279, 49);
+            btnDeleteInvoice.TabIndex = 2;
+            btnDeleteInvoice.Text = "🗑️ Delete Invoice ";
+            btnDeleteInvoice.UseVisualStyleBackColor = false;
+            btnDeleteInvoice.Click += btnDeleteInvoice_Click;
             // 
-            // btnPOS
+            // btnPayments
             // 
-            btnPOS.BackColor = Color.FromArgb(30, 41, 53);
-            btnPOS.FlatAppearance.BorderColor = Color.FromArgb(52, 65, 35);
-            btnPOS.FlatStyle = FlatStyle.Flat;
-            btnPOS.Font = new Font("Segoe UI", 15F);
-            btnPOS.Location = new Point(3, 206);
-            btnPOS.Name = "btnPOS";
-            btnPOS.Size = new Size(279, 49);
-            btnPOS.TabIndex = 1;
-            btnPOS.Text = "\U0001f6d2 POS";
-            btnPOS.UseVisualStyleBackColor = false;
+            btnPayments.BackColor = Color.FromArgb(30, 41, 53);
+            btnPayments.FlatAppearance.BorderColor = Color.FromArgb(52, 65, 35);
+            btnPayments.FlatStyle = FlatStyle.Flat;
+            btnPayments.Font = new Font("Segoe UI", 15F);
+            btnPayments.Location = new Point(3, 206);
+            btnPayments.Name = "btnPayments";
+            btnPayments.Size = new Size(279, 49);
+            btnPayments.TabIndex = 1;
+            btnPayments.Text = "\U0001f6d2 Payments";
+            btnPayments.UseVisualStyleBackColor = false;
+            btnPayments.Click += btnPayments_Click;
             // 
             // btnShowItems
             // 
@@ -213,6 +216,8 @@
             dgvCartMenuItems.ReadOnly = true;
             dgvCartMenuItems.Size = new Size(683, 197);
             dgvCartMenuItems.TabIndex = 3;
+            dgvCartMenuItems.CellContentClick += dgvCartMenuItems_CellContentClick;
+            dgvCartMenuItems.CellEndEdit += dgvCartMenuItems_CellEndEdit;
             // 
             // clmSKU
             // 
@@ -336,8 +341,8 @@
         private Panel panel1;
         private Button button2;
         private Button btnReports;
-        private Button btnCommissions;
-        private Button btnPOS;
+        private Button btnDeleteInvoice;
+        private Button btnPayments;
         private Button btnShowItems;
         private Label lblWelcom;
         private Label lblRole;
