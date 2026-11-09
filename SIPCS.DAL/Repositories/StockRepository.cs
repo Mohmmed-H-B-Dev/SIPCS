@@ -81,7 +81,8 @@ ORDER BY w.WarehouseName, p.ProductName
                 stock.StockID = reader.GetInt32(reader.GetOrdinal("StockID"));
                 stock.WarehouseID = reader.GetInt32(reader.GetOrdinal("WarehouseID"));
                 stock.ProductID = reader.GetInt32(reader.GetOrdinal("ProductID"));
-                stock.Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity"));
+             
+             stock.Quantity = reader.GetDecimal(reader.GetOrdinal("Quantity"));
 
                 stock.WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName"));
 

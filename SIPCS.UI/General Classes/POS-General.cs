@@ -12,10 +12,11 @@ namespace SIPCS.UI.General_Classes
     {
         public static List<Common_StockDetails> lItemsWarehouse {  get; set; }
 
-      
-        //General Info
+        public static List<Common_StockDetails> CartItems { get; set; }
+        public static double TaxPercentage = 0.15;
 
+        public static string BranchName = Environment.MachineName;
         static int IdWarehouse = 1;
-        static string NameWarehouse = "Oud Elite";
+      //  static string NameWarehouse = "Oud Elite";
     }
 }

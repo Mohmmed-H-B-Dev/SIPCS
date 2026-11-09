@@ -41,17 +41,17 @@
             label1 = new Label();
             panel2 = new Panel();
             dgvCartMenuItems = new DataGridView();
-            clmSKU = new DataGridViewTextBoxColumn();
-            clmProductName = new DataGridViewTextBoxColumn();
-            cmlQuantity = new DataGridViewTextBoxColumn();
-            clmUnitPrice = new DataGridViewTextBoxColumn();
-            clmDelete = new DataGridViewButtonColumn();
             label2 = new Label();
             label3 = new Label();
             panel3 = new Panel();
             label7 = new Label();
             label5 = new Label();
             label6 = new Label();
+            clmSKU = new DataGridViewTextBoxColumn();
+            clmProductName = new DataGridViewTextBoxColumn();
+            cmlQuantity = new DataGridViewTextBoxColumn();
+            clmUnitPrice = new DataGridViewTextBoxColumn();
+            clmDelete = new DataGridViewButtonColumn();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCartMenuItems).BeginInit();
@@ -213,45 +213,10 @@
             dgvCartMenuItems.Columns.AddRange(new DataGridViewColumn[] { clmSKU, clmProductName, cmlQuantity, clmUnitPrice, clmDelete });
             dgvCartMenuItems.Location = new Point(3, 3);
             dgvCartMenuItems.Name = "dgvCartMenuItems";
-            dgvCartMenuItems.ReadOnly = true;
             dgvCartMenuItems.Size = new Size(683, 197);
             dgvCartMenuItems.TabIndex = 3;
             dgvCartMenuItems.CellContentClick += dgvCartMenuItems_CellContentClick;
             dgvCartMenuItems.CellEndEdit += dgvCartMenuItems_CellEndEdit;
-            // 
-            // clmSKU
-            // 
-            clmSKU.HeaderText = "SKU";
-            clmSKU.Name = "clmSKU";
-            clmSKU.ReadOnly = true;
-            clmSKU.Width = 150;
-            // 
-            // clmProductName
-            // 
-            clmProductName.HeaderText = "ProductName";
-            clmProductName.Name = "clmProductName";
-            clmProductName.ReadOnly = true;
-            clmProductName.Width = 170;
-            // 
-            // cmlQuantity
-            // 
-            cmlQuantity.HeaderText = "Quantity";
-            cmlQuantity.Name = "cmlQuantity";
-            cmlQuantity.ReadOnly = true;
-            cmlQuantity.Width = 110;
-            // 
-            // clmUnitPrice
-            // 
-            clmUnitPrice.HeaderText = "UnitPrice";
-            clmUnitPrice.Name = "clmUnitPrice";
-            clmUnitPrice.ReadOnly = true;
-            clmUnitPrice.Width = 110;
-            // 
-            // clmDelete
-            // 
-            clmDelete.HeaderText = "Delete";
-            clmDelete.Name = "clmDelete";
-            clmDelete.ReadOnly = true;
             // 
             // label2
             // 
@@ -314,6 +279,38 @@
             label6.Size = new Size(0, 30);
             label6.TabIndex = 1;
             // 
+            // clmSKU
+            // 
+            clmSKU.HeaderText = "SKU";
+            clmSKU.Name = "clmSKU";
+            clmSKU.ReadOnly = true;
+            clmSKU.Width = 150;
+            // 
+            // clmProductName
+            // 
+            clmProductName.HeaderText = "ProductName";
+            clmProductName.Name = "clmProductName";
+            clmProductName.ReadOnly = true;
+            clmProductName.Width = 170;
+            // 
+            // cmlQuantity
+            // 
+            cmlQuantity.HeaderText = "Quantity";
+            cmlQuantity.Name = "cmlQuantity";
+            cmlQuantity.Width = 110;
+            // 
+            // clmUnitPrice
+            // 
+            clmUnitPrice.HeaderText = "UnitPrice";
+            clmUnitPrice.Name = "clmUnitPrice";
+            clmUnitPrice.ReadOnly = true;
+            clmUnitPrice.Width = 110;
+            // 
+            // clmDelete
+            // 
+            clmDelete.HeaderText = "Delete";
+            clmDelete.Name = "clmDelete";
+            // 
             // POS_Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -353,14 +350,14 @@
         private Label label3;
         private Label label4;
         private DataGridView dgvCartMenuItems;
+        private Panel panel3;
+        private Label label7;
+        private Label label5;
+        private Label label6;
         private DataGridViewTextBoxColumn clmSKU;
         private DataGridViewTextBoxColumn clmProductName;
         private DataGridViewTextBoxColumn cmlQuantity;
         private DataGridViewTextBoxColumn clmUnitPrice;
         private DataGridViewButtonColumn clmDelete;
-        private Panel panel3;
-        private Label label7;
-        private Label label5;
-        private Label label6;
     }
 }

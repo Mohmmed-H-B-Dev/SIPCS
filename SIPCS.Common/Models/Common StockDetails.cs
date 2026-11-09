@@ -12,7 +12,7 @@ namespace SIPCS.Common.Models
         public int StockID { get; set; }
         public int WarehouseID { get; set; }
         public int ProductID { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
         // Warehouse Information
         public string WarehouseName { get; set; } = string.Empty;
