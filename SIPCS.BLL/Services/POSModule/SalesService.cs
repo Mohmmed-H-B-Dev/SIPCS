@@ -13,6 +13,8 @@ namespace SIPCS.BLL.Services.POSModule
     /// </summary>
     public class SalesService
     {
+
+
      //   private readonly CommissionService _commissionService = new();
 
         /// <summary>
@@ -91,6 +93,9 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
+
+        public
        
+        
     }
 }

@@ -202,18 +202,21 @@ namespace SIPCS.UI.Forms.POS
                 // بعد معالجة الدفع، يمكنك مسح السلة وتحديث واجهة المستخدم
                 // General_Classes.POS_General.CartItems.Clear();
                 //LoadCartToListView();
-                if(!CheckPaymentMethodsTotal())
+
+
+            if(!CheckPaymentMethodsTotal())
                 {
                     MessageBox.Show($"The total paid amount does not match the grand total ({grandTotal}). Please adjust the payment methods.", "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
             List<Common.Models.TVP.PaymentMethodTableType> paymentMethods = new List<Common.Models.TVP.PaymentMethodTableType>();
             List<Common.Models.TVP.InvoiceDetailTableType> invoiceDetails = new List<Common.Models.TVP.InvoiceDetailTableType>();
             
 
             paymentMethods=_AddPaymentMethod();
 
-                foreach (var item in General_Classes.POS_General.CartItems)
+            foreach (var item in General_Classes.POS_General.CartItems)
                 {
                     invoiceDetails.Add(new Common.Models.TVP.InvoiceDetailTableType
                     {
@@ -228,24 +231,12 @@ namespace SIPCS.UI.Forms.POS
                         UnitCost = item.UnitPrice-item.UnitPrice * 0.1m // افترض خصم 10% كمثال
                     });
               
-         }
-
-
-                يرجى تصميم النظام ليقبل طرق الدفع المتعددة ، مثل الدفع النقدي، بطاقة الائتمان،
-                أو أي طريقة أخرى. يمكنك إضافة واجهة مستخدم لتحديد طريقة الدفع لكل عملية شراء.
-
-
-                وللعلم يرجى تعديل Sorted Precedure في قاعدة البيانات لتعالج وتضيف طرق الدفع المتعددة
-                وربطها بالفاتورة بشكل صحيح.
-    
+                }
 
 
 
 
 
-
-    }
         }
-
-    }
+    }  
 }
