@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Data.SqlClient;
 using SIPCS.Common.Models;
+using SIPCS.Common.Models.TVP;
 using SIPCS.DAL.Helpers;
 
 namespace SIPCS.DAL.Repositories
@@ -10,7 +11,7 @@ namespace SIPCS.DAL.Repositories
         // =====================================================
         // GET ALL
         // =====================================================
-        public List<POSInvoiceHeader> GetAll()
+        public static List<POSInvoiceHeader> GetAll()
         {
             var invoices = new List<POSInvoiceHeader>();
 
@@ -38,7 +39,7 @@ namespace SIPCS.DAL.Repositories
         // =====================================================
         // GET BY ID
         // =====================================================
-        public POSInvoiceHeader? GetById(int id)
+        public static POSInvoiceHeader? GetById(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -66,7 +67,7 @@ namespace SIPCS.DAL.Repositories
         // =====================================================
         // INSERT
         // =====================================================
-        public bool Insert(POSInvoiceHeader invoice)
+        public static bool Insert(POSInvoiceHeader invoice)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -102,10 +103,52 @@ namespace SIPCS.DAL.Repositories
             return cmd.ExecuteNonQuery() > 0;
         }
 
+        public static POSInvoiceHeader Insert(List<InvoiceDetailTableType > invoiceDetails , List<PaymentMethodTableType> payments, POSInvoiceHeader invoice)
+        {
+            using var conn = DatabaseHelper.GetConnection();
+            conn.Open();
+
+            var cmd = new SqlCommand(@"
+                INSERT INTO POS_Invoice_Header
+                (
+                    InvoiceNumber, InvoiceDate, CustomerID,
+                    UserID, WarehouseID, SubTotal,
+                    DiscountAmount, TaxAmount, GrandTotal,
+                    InvoiceStatus, Notes
+                )
+                VALUES
+                (
+                    @InvoiceNumber, @InvoiceDate, @CustomerID,
+                    @UserID, @WarehouseID, @SubTotal,
+                    @DiscountAmount, @TaxAmount, @GrandTotal,
+                    @InvoiceStatus, @Notes
+                )", conn);
+
+            cmd.Parameters.AddWithValue("@InvoiceNumber", invoice.InvoiceNumber);
+            cmd.Parameters.AddWithValue("@InvoiceDate", invoice.InvoiceDate);
+            cmd.Parameters.AddWithValue("@CustomerID", (object?)invoice.CustomerID ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@UserID", invoice.UserID);
+            cmd.Parameters.AddWithValue("@WarehouseID", invoice.WarehouseID);
+     
+            cmd.Parameters.AddWithValue("@InvoiceStatus", invoice.InvoiceStatus);
+            cmd.Parameters.AddWithValue("@Notes", (object?)invoice.Notes ?? DBNull.Value);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            var rdr  = cmd.ExecuteReader();
+
+            if (rdr.Read())
+            {
+                return MapInvoice(rdr);
+            }
+           
+            return null;
+        }
+
+
         // =====================================================
         // UPDATE
         // =====================================================
-        public bool Update(POSInvoiceHeader invoice)
+        public static bool Update(POSInvoiceHeader invoice)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -145,7 +188,7 @@ namespace SIPCS.DAL.Repositories
         // =====================================================
         // DELETE
         // =====================================================
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();

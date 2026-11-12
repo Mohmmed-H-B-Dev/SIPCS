@@ -39,7 +39,12 @@ namespace SIPCS.Common.Models
 
         // إجمالي السطر بعد الخصم والضريبة
         // نفس المعادلة الموجودة في قاعدة البيانات
-        public decimal TotalLine => SubTotal - DiscountAmount + TaxAmount;
+        private decimal _totalLine;
+        public decimal TotalLine
+        {
+            get => _totalLine;
+            set => _totalLine = SubTotal - DiscountAmount + TaxAmount; // تكلفة الوحدة وقت البيع
+        }
 
         // تكلفة الوحدة وقت البيع
         public decimal UnitCost { get; set; }

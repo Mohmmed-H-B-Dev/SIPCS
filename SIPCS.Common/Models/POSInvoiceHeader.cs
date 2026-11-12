@@ -61,7 +61,12 @@ namespace SIPCS.Common.Models
 
         // ملاحظات إضافية
         public string? Notes { get; set; }
-
+        
+		 
+		 
+	 
+	 
+		 
         // تاريخ إنشاء السجل
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 

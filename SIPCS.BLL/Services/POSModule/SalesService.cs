@@ -93,9 +93,18 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
+        public void AddInvoiceDetails(POSInvoiceDetails detail)
+        {
+            POSInvoiceHeader  invoice = POSInvoiceHeaderRepository.;
+            try { 
+                repository.Insert(detail);
+            }
+            catch (Exception ex)
+            {
+                throw new BusinessException("حدث خطأ أثناء إضافة تفاصيل الفاتورة.", ex);
+            }
 
-        public
-       
-        
-    }
+
+
+        }
 }
