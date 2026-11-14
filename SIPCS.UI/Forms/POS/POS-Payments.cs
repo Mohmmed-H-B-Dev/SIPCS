@@ -48,7 +48,7 @@ namespace SIPCS.UI.Forms.POS
                 txtTotal.Text = "0.00 ر.س"; // عرض صفر إذا كانت السلة فارغة
                 return;
             }
-          
+
 
             // المرور على عناصر السلة العامة (مثلا GlobalCart.Items أو أي اسم لديك)
             foreach (var item in General_Classes.POS_General.CartItems)
@@ -168,7 +168,7 @@ namespace SIPCS.UI.Forms.POS
             {
                 decimal creditCardAmount = decimal.Parse(txtCredit.Text);
                 totalPaid+= creditCardAmount;
-              
+
             }
             if (txtCard.Text != "")
             {
@@ -189,54 +189,62 @@ namespace SIPCS.UI.Forms.POS
 
             if (totalPaid != grandTotal)
             {
-             //   MessageBox.Show($"The total paid amount ({totalPaid}) does not match the grand total ({grandTotal}). Please adjust the payment methods.", "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-              //  throw new InvalidOperationException("Payment methods total does not match grand total.");
-            return false;
+                //   MessageBox.Show($"The total paid amount ({totalPaid}) does not match the grand total ({grandTotal}). Please adjust the payment methods.", "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //  throw new InvalidOperationException("Payment methods total does not match grand total.");
+                return false;
             }
 
             return true;
         }
         void _SeverPayed()
         {
-                // هنا يمكنك وضع الكود لمعالجة الدفع، مثل إرسال البيانات إلى قاعدة البيانات أو أي عملية أخرى
-                // بعد معالجة الدفع، يمكنك مسح السلة وتحديث واجهة المستخدم
-                // General_Classes.POS_General.CartItems.Clear();
-                //LoadCartToListView();
+            // هنا يمكنك وضع الكود لمعالجة الدفع، مثل إرسال البيانات إلى قاعدة البيانات أو أي عملية أخرى
+            // بعد معالجة الدفع، يمكنك مسح السلة وتحديث واجهة المستخدم
+            // General_Classes.POS_General.CartItems.Clear();
+            //LoadCartToListView();
+            SIPCS.BLL.Services.POSModule.SalesService posService = new SIPCS.BLL.Services.POSModule.SalesService();
+            posService.CustomerID=General_Classes.POS_General.CustomerID;
+            posService.WarehouseID=General_Classes.POS_General.IdWarehouse;
+            posService.Notes="Payment processed via POS";
+
+            if (!CheckPaymentMethodsTotal())
+            {
+                MessageBox.Show($"The total paid amount does not match the grand total ({grandTotal}). Please adjust the payment methods.", "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
 
-            if(!CheckPaymentMethodsTotal())
-                {
-                    MessageBox.Show($"The total paid amount does not match the grand total ({grandTotal}). Please adjust the payment methods.", "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-            List<Common.Models.TVP.PaymentMethodTableType> paymentMethods = new List<Common.Models.TVP.PaymentMethodTableType>();
-            List<Common.Models.TVP.InvoiceDetailTableType> invoiceDetails = new List<Common.Models.TVP.InvoiceDetailTableType>();
-            
-
-            paymentMethods=_AddPaymentMethod();
+            posService.paymentMethods=_AddPaymentMethod();
 
             foreach (var item in General_Classes.POS_General.CartItems)
+            {
+                posService.invoiceDetails.Add(new Common.Models.TVP.InvoiceDetailTableType
                 {
-                    invoiceDetails.Add(new Common.Models.TVP.InvoiceDetailTableType
-                    {
-                        ProductId = item.ProductID,
-                        SKU = item.SKU,
-                        ProductName = item.ProductName,
-                        Quantity = item.Quantity,
-                        UnitPrice = item.UnitPrice,
-                        DiscountAmount = 0,
-                        TaxRate =(decimal) General_Classes.POS_General.TaxPercentage,
-                        TaxAmount =(item.Quantity * item.UnitPrice )* (decimal) General_Classes.POS_General.TaxPercentage,
-                        UnitCost = item.UnitPrice-item.UnitPrice * 0.1m // افترض خصم 10% كمثال
-                    });
-              
-                }
+                    ProductId = item.ProductID,
+                    SKU = item.SKU,
+                    ProductName = item.ProductName,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    DiscountAmount = 0,
+                    TaxRate =(decimal)General_Classes.POS_General.TaxPercentage,
+                    TaxAmount =(item.Quantity * item.UnitPrice)* (decimal)General_Classes.POS_General.TaxPercentage,
+                    UnitCost = item.UnitPrice-item.UnitPrice * 0.1m // افترض خصم 10% كمثال
+                });
+
+            }
+
+            try
+            {
+                SIPCS.Common.Exceptions.B_Exception result = new Common.Exceptions.B_Exception();
+            }
+            catch (SIPCS.Common.Exceptions.B_Exception ex)
+            {
+                MessageBox.Show($"Error processing payment: {ex.Message}", "Payment Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
 
-
-
+            }
         }
-    }  
+    }
 }

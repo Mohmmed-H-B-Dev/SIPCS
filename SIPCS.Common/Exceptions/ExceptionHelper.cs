@@ -6,10 +6,9 @@ namespace SIPCS.Common.Exceptions
     public class ExceptionHelper
     {
 
-
         public ExceptionHelper() { }
-
-        public static BusinessException Convert(Exception ex)
+        
+        public static B_Exception Convert(Exception ex)
         {
             if (ex is SqlException sqlEx)
             {

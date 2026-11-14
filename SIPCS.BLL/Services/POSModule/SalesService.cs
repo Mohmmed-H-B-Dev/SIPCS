@@ -5,6 +5,7 @@ using SIPCS.Common.Models;
 using SIPCS.DAL.Helpers;
 using SIPCS.DAL.Repositories;
 using System.Data;
+using System.Net.NetworkInformation;
 
 namespace SIPCS.BLL.Services.POSModule
 {
@@ -13,9 +14,35 @@ namespace SIPCS.BLL.Services.POSModule
     /// </summary>
     public class SalesService
     {
+        enum enInvoiceStatus
+        {
+            New = 1,
+            ToReturned = 2
 
+        }
 
-     //   private readonly CommissionService _commissionService = new();
+        public int WarehouseID { set; get; }
+        public int CustomerID { set; get; }
+        public string Notes { set; get; } = string.Empty;
+
+        enInvoiceStatus InvoiceStatus { set; get; } = enInvoiceStatus.New;
+        public SalesService(int warehouseID, int customerID, string notes)
+        {
+            WarehouseID = warehouseID;
+            CustomerID = customerID;
+            Notes = notes;
+            InvoiceStatus=enInvoiceStatus.ToReturned;
+        }
+        public SalesService()
+        {
+            WarehouseID = -1;
+            CustomerID = -1;
+            Notes = string.Empty;
+        }
+        public  List<Common.Models.TVP.PaymentMethodTableType> paymentMethods = new List<Common.Models.TVP.PaymentMethodTableType>();
+        public  List<Common.Models.TVP.InvoiceDetailTableType> invoiceDetails = new List<Common.Models.TVP.InvoiceDetailTableType>();
+        POSInvoiceHeader Pre_invoice = new POSInvoiceHeader();
+        //   private readonly CommissionService _commissionService = new();
 
         /// <summary>
         /// إتمام عملية البيع وخصم الكمية من المخزون واحتساب العمولة
@@ -23,7 +50,7 @@ namespace SIPCS.BLL.Services.POSModule
         public bool ProcessSale(SalesInvoice invoice)
         {
             // تحقق من توفر الكميات أولاً
-         // _commissionService.ValidateStock(invoice);
+            // _commissionService.ValidateStock(invoice);
 
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
@@ -32,9 +59,9 @@ namespace SIPCS.BLL.Services.POSModule
             try
             {
                 // 1. احسب الإجماليات
-             //   invoice.SubTotal    = invoice.Details.Sum(d => d.TotalLine);
-              //  invoice.TaxAmount   = Math.Round(invoice.SubTotal * 0.15m, 2); // 15% ضريبة
-            //    invoice.GrandTotal  = invoice.SubTotal + invoice.TaxAmount - invoice.DiscountAmount;
+                //   invoice.SubTotal    = invoice.Details.Sum(d => d.TotalLine);
+                //  invoice.TaxAmount   = Math.Round(invoice.SubTotal * 0.15m, 2); // 15% ضريبة
+                //    invoice.GrandTotal  = invoice.SubTotal + invoice.TaxAmount - invoice.DiscountAmount;
 
                 // 2. أدخل الفاتورة
                 var invCmd = new SqlCommand(@"
@@ -93,18 +120,56 @@ namespace SIPCS.BLL.Services.POSModule
             }
         }
 
-        public void AddInvoiceDetails(POSInvoiceDetails detail)
+        private bool _AddInvoiceDetails(int WarehouseID, int CustomerID, string Notes)
         {
-            POSInvoiceHeader  invoice = POSInvoiceHeaderRepository.;
-            try { 
-                repository.Insert(detail);
+            POSInvoiceHeader detail = new POSInvoiceHeader();
+            detail.CustomerID=CustomerID;
+            detail.Notes=Notes;
+            detail.WarehouseID = WarehouseID;
+            detail.InvoiceDate=DateTime.Now;
+            detail.InvoiceStatus = SIPCS.Common.Enums.POSInvoiceStatus.Completed;
+            detail.UserID=SIPCS.BLL.Services.UserModule.UserService.CurrentUser.UserID;
+
+            try
+            {
+                Pre_invoice=POSInvoiceHeaderRepository.Insert(invoiceDetails, paymentMethods, detail);
+
+                if (Pre_invoice != null && Pre_invoice.InvoiceID > 0)
+                {
+                    return true;
+                }
+
             }
             catch (Exception ex)
             {
-                throw new BusinessException("حدث خطأ أثناء إضافة تفاصيل الفاتورة.", ex);
+                throw SIPCS.Common.Exceptions.ExceptionHelper.Convert(ex);
             }
 
+            return false;
+        }
 
+        public bool SaveInvoiceDetails()
+        {
+            switch (InvoiceStatus)
+            {
+                case enInvoiceStatus.New:
+                    if (_AddInvoiceDetails(WarehouseID, CustomerID, Notes))
+                    {
+                        this.CustomerID=-1;
+                        this.Notes=string.Empty;
+                        return true;
+                    }
+                    break;
+                case enInvoiceStatus.ToReturned:
+                    //  return POSInvoiceHeaderRepository.ReturnInvoice(Pre_invoice.InvoiceID, WarehouseID, CustomerID, Notes);
+
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid invoice status.");
+            }
+
+            return false;
 
         }
+    }
 }

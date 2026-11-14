@@ -14,9 +14,9 @@ namespace SIPCS.UI.General_Classes
 
         public static List<Common_StockDetails> CartItems { get; set; }
         public static double TaxPercentage = 0.15;
-
+        public static int CustomerID=-1;
         public static string BranchName = Environment.MachineName;
-        static int IdWarehouse = 1;
+        public static int IdWarehouse = 1;
       //  static string NameWarehouse = "Oud Elite";
     }
 }
