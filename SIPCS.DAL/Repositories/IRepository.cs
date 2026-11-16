@@ -1,4 +1,6 @@
-﻿namespace SIPCS.DAL.Repositories
+﻿using System.Data;
+
+namespace SIPCS.DAL.Repositories
 {
     /// <summary>
     /// 
@@ -40,6 +42,28 @@
         /// <param name="id">The ID of the entity to delete.</param>
         /// <returns>Returns true if the delete was successful, otherwise false.</returns>
         static bool Delete(int id) {  return false; }
+
+
+        public static DataTable ToShortDataTable<T>(this IEnumerable<T> source)
+        {
+            var dt = new DataTable();
+            var properties = typeof(T).GetProperties();
+            var F= typeof(T).GetProperties();
+            foreach (var prop in properties)
+            {
+                dt.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (var item in source)
+            {
+                dt.Rows.Add(properties.Select(p=>p.GetValue(item) ?? DBNull.Value).ToArray());
+
+            }
+
+            hhjja
+
+            return dt;
+        }
 
     }
 }

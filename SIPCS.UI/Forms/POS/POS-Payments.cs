@@ -236,7 +236,20 @@ namespace SIPCS.UI.Forms.POS
 
             try
             {
-                SIPCS.Common.Exceptions.B_Exception result = new Common.Exceptions.B_Exception();
+              if(posService.SaveInvoiceDetails())
+                {
+                    General_Classes.POS_General.CartItems.Clear();
+                    LoadCartToListView();
+                    MessageBox.Show("Payment processed successfully!", "Payment Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else {            
+                    MessageBox.Show("Failed to save invoice details. Please try again.", "Payment Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
+
+              
             }
             catch (SIPCS.Common.Exceptions.B_Exception ex)
             {

@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using SIPCS.Common.Models;
 using SIPCS.Common.Models.TVP;
 using SIPCS.DAL.Helpers;
+using System.Reflection;
+using System.Linq;
 
 namespace SIPCS.DAL.Repositories
 {
@@ -107,8 +109,8 @@ namespace SIPCS.DAL.Repositories
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
-            
-            var cmd = new SqlCommand(@"
+            invoiceDetails.CopyToDataTable
+              var cmd = new SqlCommand(@"
                 INSERT INTO POS_Invoice_Header
                 (
                     InvoiceNumber, InvoiceDate, CustomerID,
@@ -140,7 +142,9 @@ namespace SIPCS.DAL.Repositories
             {
                 هنا لازم تعدل بحيث تستقل بيانات الفاتورة من 3 جداول 
                 : POS_Invoice_Header و POS_Invoice_Details و POS_Payment_Transaction.
-                    يمكنك استخدام TVP (Table-Valued Parameters) لإرسال قائمة التفاصيل والمدفوعات إلى الإجراء المخزن. بعد تنفيذ الإجراء المخزن، يمكنك قراءة بيانات الفاتورة المضافة من قاعدة البيانات وإرجاعها.
+                    يمكنك استخدام TVP (Table-Valued Parameters) لإرسال قائمة التفاصيل والمدفوعات 
+                    إلى الإجراء المخزن. بعد تنفيذ الإجراء المخزن، يمكنك قراءة بيانات الفاتورة المضافة
+                    من قاعدة البيانات وإرجاعها.
                 return MapInvoice(rdr);
             }
            
