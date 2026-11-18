@@ -1,5 +1,6 @@
 ﻿using System.Data;
-
+using System.Reflection;
+using System.Collections;
 namespace SIPCS.DAL.Repositories
 {
     /// <summary>
@@ -44,26 +45,7 @@ namespace SIPCS.DAL.Repositories
         static bool Delete(int id) {  return false; }
 
 
-        public static DataTable ToShortDataTable<T>(this IEnumerable<T> source)
-        {
-            var dt = new DataTable();
-            var properties = typeof(T).GetProperties();
-            var F= typeof(T).GetProperties();
-            foreach (var prop in properties)
-            {
-                dt.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-            }
-
-            foreach (var item in source)
-            {
-                dt.Rows.Add(properties.Select(p=>p.GetValue(item) ?? DBNull.Value).ToArray());
-
-            }
-
-            hhjja
-
-            return dt;
-        }
+     
 
     }
 }

@@ -5,6 +5,7 @@ using SIPCS.Common.Models.TVP;
 using SIPCS.DAL.Helpers;
 using System.Reflection;
 using System.Linq;
+using System.Data;
 
 namespace SIPCS.DAL.Repositories
 {
@@ -109,8 +110,11 @@ namespace SIPCS.DAL.Repositories
         {
             using var conn = DatabaseHelper.GetConnection();
             conn.Open();
-            invoiceDetails.CopyToDataTable
-              var cmd = new SqlCommand(@"
+
+            DataTable dtinvoiceDetails = invoiceDetails.ToShortDataTable();
+
+            DataTable dtpayments = payments.ToShortDataTable();
+            var cmd = new SqlCommand(@"
                 INSERT INTO POS_Invoice_Header
                 (
                     InvoiceNumber, InvoiceDate, CustomerID,
@@ -134,7 +138,9 @@ namespace SIPCS.DAL.Repositories
      
             cmd.Parameters.AddWithValue("@InvoiceStatus", invoice.InvoiceStatus);
             cmd.Parameters.AddWithValue("@Notes", (object?)invoice.Notes ?? DBNull.Value);
-
+            SqlParameter tvpParam = cmd.Parameters.AddWithValue("@Items", dtinvoiceDetails);
+            tvpParam.SqlDbType = SqlDbType.Structured;
+            tvpParam.TypeName = "dbo.InvoiceItemTableType"; // يجب أن يطابق اسم الـ Type الذي أنشأته في SQL
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             var rdr  = cmd.ExecuteReader();
 
